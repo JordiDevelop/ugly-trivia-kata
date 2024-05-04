@@ -2,7 +2,7 @@
 
 namespace Trivia
 {
-    public class GameRunner
+    public abstract class GameRunner
     {
         private static bool _notAWinner;
 
@@ -20,15 +20,14 @@ namespace Trivia
             {
                 aGame.Roll(rand.Next(5) + 1);
 
-                if (rand.Next(9) == 7)
-                {
-                    _notAWinner = aGame.WrongAnswer();
-                }
-                else
-                {
-                    _notAWinner = aGame.WasCorrectlyAnswered();
-                }
+                _notAWinner = WasCorrectlyAnswered(rand, aGame);
+                
             } while (_notAWinner);
+        }
+
+        private static bool WasCorrectlyAnswered(Random rand, Game aGame)
+        {
+            return rand.Next(9) == 7 ? aGame.WrongAnswer() : aGame.WasCorrectlyAnswered();
         }
     }
 }
